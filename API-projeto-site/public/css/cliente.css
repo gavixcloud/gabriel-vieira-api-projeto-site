@@ -82,8 +82,8 @@
 .centerbox {
     background-color: white;
     border-radius: 20px 20px 20px 20px;
-    padding-top: 90px;
-    padding-bottom: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     overflow: auto;
 }
 .center_charts {
@@ -105,36 +105,23 @@
     background-color: cornflowerblue;
 }
 .medidor {
-    height: 70px;
+    height: 60px;
     font-size: 30px;
     border-radius: 35px 35px 0px 0px;
     text-align: center;
+    padding-top: 15px;
     color: white;
 }
-.medidor-red {
-    background-color: #cd5c5c;
+.medidor-full {
+    background-color: #ffffff;
     width: 300px;
     margin: 0 auto;
     text-align: center;
     height: 30px;
-    border-top: 1px #bf5b5b solid;
-    border-radius: 0px 0px 40px 40px;
+    border: 1px #0c0c0c solid;
+    border-radius: 40px 40px 0px 0px;
 }
-.medidor-blue {
-    background-color: #6495ed;
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-    height: 30px;
-    border-top: 1px #5782d3 solid;
-    border-radius: 0px 0px 40px 40px;
-}
-.drop-medidor {
-height: 30px;
-}
-.bg-dropm {
-    background-color: #C4C4C4;
-}
+
 .historico {
     background-color: #C4C4C4;
     padding: 10px;
@@ -181,4 +168,10 @@ height: 30px;
   .dropdown:hover .drop-btn {
     transform: rotateX(180deg);
   }
-  
+  .inline-buttons {
+    margin: 0 auto;
+    max-width: 360px;
+  }
+ .btn {
+    margin-right: 20px;
+}

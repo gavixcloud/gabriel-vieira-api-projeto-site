@@ -43,28 +43,25 @@
 
             <div class="container">
 
-                <form id="form_login" method="post" onsubmit="return entrar()">
-
                 <p class="formtxt">E-mail:</p>
-                <input type="text" id="ipt_login" name="login" class="inp-simple" placeholder="insira seu e-mail"><br>
+                <input type="text" id="ipt_login" class="inp-simple" placeholder="insira seu e-mail"><br>
                 <p class="formtxt">Senha:</p>
-                <input name="senha" type="password" id="ipt_senha" class="inp-simple" placeholder="********">
+                <input type="password" id="ipt_senha" class="inp-simple" placeholder="********">
                 <p style="cursor: pointer;" onclick="recuperar()">Esqueceu sua senha? Clique aqui</p>
 
                 <div class="alinhamento">
                     <span onclick="cadastrar()" style="cursor: pointer;">Cadastre-se</span>
 
                     <a>
-                        <button  id="btn_entrar" class="button">Login</button>
+                        <button class="button" onclick="entrar()">Login</button>
                     </a>
-                </form>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- <div id="cadastro" class="form" style="display: none;">
+        <div id="cadastro" class="form" style="display: none;">
 
             <div class="container">
 
@@ -91,12 +88,9 @@
                     <button class="button" onclick="registrar()">Registar</button>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <div class="form" style="display: none;" id="recuperar_senha">
-
-            <
-            
             <div class="container">
                 <p class="formtxt">Para redefinir sua senha, informe seu e-mail cadastrado e lhe enviaremos um e-mail
                     com instruções.</p>
@@ -105,8 +99,7 @@
 
                 <div class="alinhamento">
                     <button onclick="enviar()" class="button">Enviar</button>
-               
-            </form>
+                </div>
             </div>
 
         </div>
@@ -139,155 +132,110 @@
 
 <script>
 
-function entrar() {
-        // aguardar();
-        var formulario = new URLSearchParams(new FormData(form_login));
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            body: formulario
-        }).then(resposta => {
+    function cadastrar() {
+        login.style.display = 'none';
+        cadastro.style.display = 'block';
+        recuperar_senha.style.display = 'none'
+        div_msg.style.display = 'none'
+    }
 
-            if (resposta.ok) {
+    function logar() {
+        cadastro.style.display = 'none';
+        login.style.display = 'block';
+        recuperar_senha.style.display = 'none'
+        div_msg.style.display = 'none';
+    }
 
-                resposta.json().then(json => {
 
-                    sessionStorage.login_usuario_meuapp = json.login;
-                    sessionStorage.nome_usuario_meuapp = json.nome;
+    function recuperar() {
+        cadastro.style.display = 'none';
+        login.style.display = 'none';
+        recuperar_senha.style.display = 'block'
+        div_msg.style.display = 'none';
+    }
 
-                    window.location.href = 'cliente.html';
-                });
+    function enviar() {
+        cadastro.style.display = 'none';
+        login.style.display = 'none';
+        recuperar_senha.style.display = 'none'
+        div_msg.style.display = 'block'
+    }
+
+    function registrar() {
+
+        var email = cadastro_email.value;
+        var nome = cadastro_nome.value;
+        var senha = cadastro_senha.value;
+        var Csenha = cadastro_Csenha.value;
+        var selectipo = tipo.value;
+
+        if (email != ' ' && nome != ' ' && senha != ' ' && Csenha != ' ' && selectipo != ' ') {
+
+            if (senha == Csenha) {
+
+                alert('Cadastro finalizado com sucesso!!');
+
 
             } else {
 
-                console.log('Erro de login!');
+                alert('A confirmação da senha está incorreta!')
 
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizar_aguardar(texto);
-                });
             }
-        });
 
-        return false;
+        } else {
+
+            alert('Por favor preencha todos os campos.');
+
+        }
     }
 
-    function aguardar() {
-        btn_entrar.disabled = true;
-        img_aguarde.style.visibility = 'visible';
-        div_erro.style.visibility = 'hidden';
-    }
+    function entrar() {
+        var login = ipt_login.value;
+        var password = ipt_senha.value;
 
-    function finalizar_aguardar(resposta) {
-        btn_entrar.disabled = false;
-        img_aguarde.style.visibility = 'hidden';
-        div_erro.style.visibility = 'visible';
-        div_erro.innerHTML = resposta;
-    }
+        if (login != '' && password != '') {
 
-    // function cadastrar() {
-    //     login.style.display = 'none';
-    //     cadastro.style.display = 'block';
-    //     recuperar_senha.style.display = 'none'
-    //     div_msg.style.display = 'none'
-    // }
+            ax_login = login.endsWith('@gmail.com') || login.endsWith('@hotmail.com');
+            ax_senha = password.length;
 
-    // function logar() {
-    //     cadastro.style.display = 'none';
-    //     login.style.display = 'block';
-    //     recuperar_senha.style.display = 'none'
-    //     div_msg.style.display = 'none';
-    // }
+            if (ax_login && ax_senha >= 6) {
 
-
-    // function recuperar() {
-    //     cadastro.style.display = 'none';
-    //     login.style.display = 'none';
-    //     recuperar_senha.style.display = 'block'
-    //     div_msg.style.display = 'none';
-    // }
-
-    // function enviar() {
-    //     cadastro.style.display = 'none';
-    //     login.style.display = 'none';
-    //     recuperar_senha.style.display = 'none'
-    //     div_msg.style.display = 'block'
-    // }
-
-    // function registrar() {
-
-    //     var email = cadastro_email.value;
-    //     var nome = cadastro_nome.value;
-    //     var senha = cadastro_senha.value;
-    //     var Csenha = cadastro_Csenha.value;
-    //     var selectipo = tipo.value;
-
-    //     if (email != ' ' && nome != ' ' && senha != ' ' && Csenha != ' ' && selectipo != ' ') {
-
-    //         if (senha == Csenha) {
-
-    //             alert('Cadastro finalizado com sucesso!!');
-
-
-    //         } else {
-
-    //             alert('A confirmação da senha está incorreta!')
-
-    //         }
-
-    //     } else {
-
-    //         alert('Por favor preencha todos os campos.');
-
-    //     }
-    // }
-
-    // function entrar() {
-    //     var login = ipt_login.value;
-    //     var password = ipt_senha.value;
-
-    //     if (login != '' && password != '') {
-
-    //         ax_login = login.endsWith('@gmail.com') || login.endsWith('@hotmail.com');
-    //         ax_senha = password.length;
-
-    //         if (ax_login && ax_senha >= 6) {
-
-    //             ipt_login.style = 'border: #01A560 solid;';
-    //             ipt_senha.style = 'border: #01A560 solid;';
-    //             window.location.href="cliente.html";
+                ipt_login.style = 'border: #01A560 solid;';
+                ipt_senha.style = 'border: #01A560 solid;';
+                window.location.href="cliente.html";
 
                 
 
-    //         } else {
+            } else {
 
 
-    //             if (ax_login) {
+                if (ax_login) {
 
-    //                 ipt_senha.style = 'border: red solid;';
-    //                 alert('A senha deve ter no minimo 6 Caracteres');
-    //                 ipt_senha.value = '';
-    //                 ipt_login.value = '';
-
-
-    //             } else {
-
-    //                 alert('Email incorreto')
-
-    //                 ipt_login.style = 'border: red solid;';
-    //                 ipt_senha.value = '';
-    //                 ipt_login.value = '';
-    //             }
-
-    //         }
+                    ipt_senha.style = 'border: red solid;';
+                    alert('A senha deve ter no minimo 6 Caracteres');
+                    ipt_senha.value = '';
+                    ipt_login.value = '';
 
 
+                } else {
 
-    //     } else {
+                    alert('Email incorreto')
 
-    //         alert('Por favor preencha todos os campos!.');
+                    ipt_login.style = 'border: red solid;';
+                    ipt_senha.value = '';
+                    ipt_login.value = '';
+                }
 
-    //     }
+            }
 
-    // }
+
+
+        } else {
+
+            alert('Por favor preencha todos os campos!.');
+
+        }
+
+    }
 
 </script>
